@@ -1,20 +1,20 @@
+# conftest.py
 import pytest
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.firefox.options import Options
+from data import BASE_URL  # Импортируем из data модуля
 
 @pytest.fixture(scope="session")
 def base_url():
-    return "https://qa-scooter.praktikum-services.ru/"
+    return BASE_URL  # Берем из data.py
 
 @pytest.fixture
 def driver():
-    options = FirefoxOptions()
+    options = Options()
     options.add_argument("--width=1400")
     options.add_argument("--height=1000")
     
-    service = FirefoxService()
-    driver = webdriver.Firefox(service=service, options=options)
+    driver = webdriver.Firefox(options=options)
     driver.implicitly_wait(10)
     
     yield driver
