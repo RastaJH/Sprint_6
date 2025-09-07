@@ -1,39 +1,29 @@
-# tests/test_navigation.py
 import allure
 import pytest
+from data import BASE_URL
 from pages.home_page import HomePage
 
 @allure.feature("Navigation")
 class TestNavigation:
     @allure.title("Проверка перехода по логотипу Самоката")
-    def test_scooter_logo_redirects_to_home(self, driver, base_url):
+    def test_scooter_logo_redirects_to_home(self, driver):
         home_page = HomePage(driver)
         
-        with allure.step("Открыть главную страницу"):
-            home_page.open_main_page(base_url)
-            home_page.accept_cookies()
+        home_page.open_main_page(BASE_URL)
+        home_page.accept_cookies()
+        home_page.click_order_button_top()
+        home_page.click_scooter_logo()
         
-        with allure.step("Перейти к оформлению заказа"):
-            home_page.click_order_button_top()
-        
-        with allure.step("Вернуться на главную по логотипу"):  # Используем метод страницы
-            home_page.click_scooter_logo()  # ← ТЕПЕРЬ ПРАВИЛЬНО!
-        
-        with allure.step("Проверить URL главной страницы"):
-            assert home_page.get_current_url() == base_url
+        assert home_page.get_current_url() == BASE_URL
 
     @allure.title("Проверка перехода по логотипу Яндекса")
-    def test_yandex_logo_opens_dzen(self, driver, base_url):
+    def test_yandex_logo_opens_dzen(self, driver):
         home_page = HomePage(driver)
         
-        with allure.step("Открыть главную страницу"):
-            home_page.open_main_page(base_url)
-            home_page.accept_cookies()
+        home_page.open_main_page(BASE_URL)
+        home_page.accept_cookies()
+        home_page.click_yandex_logo()
+        home_page.switch_to_new_tab()
         
-        with allure.step("Перейти на Дзен через логотип"):  # Используем метод страницы
-            home_page.click_yandex_logo()  # ← ТЕПЕРЬ ПРАВИЛЬНО!
-            home_page.switch_to_new_tab()
-        
-        with allure.step("Проверить открытие Дзен или Яндекса"):
-            current_url = home_page.get_current_url()
-            assert "dzen.ru" in current_url or "yandex.ru" in current_url
+        current_url = home_page.get_current_url()
+        assert "dzen.ru" in current_url or "yandex.ru" in current_url

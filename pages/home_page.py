@@ -1,4 +1,3 @@
-# pages/home_page.py
 import allure
 from pages.base_page import BasePage
 from locators.home_page_locators import HomePageLocators
@@ -12,7 +11,7 @@ class HomePage(BasePage):
     def open_main_page(self, base_url):
         self.open(base_url)
     
-    @allure.step("Принять cookies")  # Метод перенесен из BasePage
+    @allure.step("Принять cookies")
     def accept_cookies(self):
         self.click(BaseLocators.COOKIE_ACCEPT)
     
@@ -24,11 +23,11 @@ class HomePage(BasePage):
     def click_order_button_bottom(self):
         self.click(HomePageLocators.ORDER_BUTTON_BOTTOM)
     
-    @allure.step("Кликнуть на логотип Самоката")  # Использовать этот метод в тестах
+    @allure.step("Кликнуть на логотип Самоката") 
     def click_scooter_logo(self):
         self.click(BaseLocators.SCOOTER_LOGO)
     
-    @allure.step("Кликнуть на логотип Яндекса")  # Использовать этот метод в тестах
+    @allure.step("Кликнуть на логотип Яндекса")
     def click_yandex_logo(self):
         self.click(BaseLocators.YANDEX_LOGO)
     

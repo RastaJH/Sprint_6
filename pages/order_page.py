@@ -1,10 +1,9 @@
-# pages/order_page.py
 import allure
-import time
 from pages.base_page import BasePage
 from locators.order_page_locators import OrderPageLocators
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
 
 class OrderPage(BasePage):
     def __init__(self, driver):
@@ -16,11 +15,11 @@ class OrderPage(BasePage):
         self.send_keys(OrderPageLocators.LAST_NAME, last_name)
         self.send_keys(OrderPageLocators.ADDRESS, address)
 
-        # Исправленный выбор метро
         self.click(OrderPageLocators.METRO_INPUT)
-        time.sleep(1)
         
-        # Ищем станцию по названию
+        dropdown = (By.CLASS_NAME, "select-search__select")
+        self.wait.until(EC.visibility_of_element_located(dropdown))
+        
         metro_option = (By.XPATH, f"//div[contains(text(), '{metro_station}')]")
         self.click(metro_option)
 
@@ -35,7 +34,9 @@ class OrderPage(BasePage):
         date_field.send_keys(Keys.RETURN)
 
         self.click(OrderPageLocators.RENTAL_PERIOD)
-        time.sleep(1)
+        
+        dropdown = (By.CLASS_NAME, "Dropdown-menu")
+        self.wait.until(EC.visibility_of_element_located(dropdown))
         
         period_option = (By.XPATH, f"//div[contains(text(), '{period}')]")
         self.click(period_option)

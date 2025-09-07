@@ -1,19 +1,18 @@
-# tests/test_order.py
 import allure
 import pytest
+from data import ORDER_DATA, BASE_URL
 from pages.home_page import HomePage
 from pages.order_page import OrderPage
-from data import ORDER_DATA
 
 @allure.feature("Order Process")
 class TestOrder:
     @allure.title("Оформление заказа через верхнюю кнопку")
     @pytest.mark.parametrize("order", ORDER_DATA)
-    def test_order_via_top_button(self, driver, base_url, order):
+    def test_order_via_top_button(self, driver, order):
         home_page = HomePage(driver)
         order_page = OrderPage(driver)
 
-        home_page.open_main_page(base_url)
+        home_page.open_main_page(BASE_URL)
         home_page.accept_cookies()
         home_page.click_order_button_top()
 
@@ -31,11 +30,11 @@ class TestOrder:
 
     @allure.title("Оформление заказа через нижнюю кнопку")
     @pytest.mark.parametrize("order", ORDER_DATA)
-    def test_order_via_bottom_button(self, driver, base_url, order):
+    def test_order_via_bottom_button(self, driver, order):
         home_page = HomePage(driver)
         order_page = OrderPage(driver)
 
-        home_page.open_main_page(base_url)
+        home_page.open_main_page(BASE_URL)
         home_page.accept_cookies()
         home_page.click_order_button_bottom()
 
